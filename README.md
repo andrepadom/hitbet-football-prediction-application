@@ -1,8 +1,71 @@
-# HitBet Football Prediction Application with database
+# HitBet Football Prediction Application
 
 ## Overview
 
 HitBet is a sophisticated Flask-based web application designed to predict football match outcomes using machine learning. The application combines historical data analysis with advanced machine learning models to provide accurate predictions for various football leagues worldwide. The system uses PostgreSQL database for scalable data storage and management.
+
+**NEW**: Now includes a native iOS app! See the [iOS Integration Guide](IOS_INTEGRATION_GUIDE.md) for details.
+
+## Platforms
+
+### Web Application (Flask)
+- Full-featured web interface
+- Dashboard, league management, model training, predictions, and analysis
+- Access via browser at http://localhost:5000
+
+### iOS Application (Swift/SwiftUI) 🆕
+- Native iOS app with modern SwiftUI interface
+- All features available on iPhone and iPad
+- RESTful API integration
+- See [ios-app/README.md](ios-app/README.md) for setup
+
+## Quick Start
+
+### Option 1: Automated Setup
+```bash
+./setup.sh
+```
+
+### Option 2: Manual Setup
+
+**Backend:**
+```bash
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set environment variables
+export DATABASE_URL='postgresql://user:password@localhost/hitbet'
+export SECRET_KEY='your-secret-key'
+
+# Run migrations
+flask db upgrade
+
+# Start server
+python app.py
+```
+
+**iOS App:**
+```bash
+# Open in Xcode
+cd ios-app/HitBetApp
+open HitBetApp.xcodeproj
+
+# Configure API URL in APIService.swift
+# Build and run (⌘R)
+```
+
+## Documentation
+
+- **[API Documentation](API_DOCUMENTATION.md)** - Complete REST API reference
+- **[iOS Integration Guide](IOS_INTEGRATION_GUIDE.md)** - iOS app integration details
+- **[iOS App README](ios-app/README.md)** - iOS app setup and features
+- **[Implementation Summary](IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
+- **[Security Guide](SECURITY.md)** - Security analysis and best practices
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -46,11 +109,27 @@ Preferred communication style: Simple, everyday language.
    - Feature importance analysis capabilities
 
 ### Frontend Components
+
+#### Web Interface
 1. **Dashboard**: Overview of system status and quick actions
 2. **League Management**: Interface for downloading and managing league data
 3. **Model Management**: Training, evaluation, and model lifecycle management
 4. **Prediction Interface**: Single match, CSV batch, and fixture-based predictions
 5. **Analysis Tools**: Data visualization and model performance metrics
+
+#### iOS Application (Native Mobile App) 🆕
+1. **Dashboard View**: Statistics overview, recent leagues and models
+2. **Leagues View**: Browse and download leagues, manage saved data
+3. **Models View**: Train new models, view performance metrics
+4. **Predictions View**: Predict match outcomes with visual probability bars
+5. **Analysis View**: League and model performance analytics
+
+### Mobile API Layer 🆕
+- RESTful API endpoints at `/api/v1/`
+- JSON-based request/response format
+- CORS enabled for mobile clients
+- Secure error handling
+- 20+ endpoints covering all functionality
 
 ## Data Flow
 
