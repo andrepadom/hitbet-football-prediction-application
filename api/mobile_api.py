@@ -4,7 +4,7 @@ Provides RESTful endpoints optimized for mobile clients
 """
 
 import logging
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 import os
 
@@ -37,6 +37,22 @@ def init_mobile_api(league_repository, model_repository, data_svc, prediction_sv
     data_service = data_svc
     prediction_service = prediction_svc
     scraping_service = scraping_svc
+
+
+def _get_safe_error_message(error):
+    """
+    Get a safe error message for the client.
+    In production, this returns a generic message and logs the actual error.
+    In debug mode, it returns the actual error message.
+    """
+    error_message = str(error)
+    logger.error(f"API Error: {error_message}", exc_info=True)
+    
+    # In production, return generic message. In debug, return actual error.
+    if current_app.debug:
+        return error_message
+    else:
+        return "An error occurred processing your request. Please try again later."
 
 
 # ============================================================================
@@ -88,7 +104,7 @@ def get_dashboard():
         logger.error(f"Dashboard error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -153,7 +169,7 @@ def get_leagues():
         logger.error(f"Get leagues error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -189,7 +205,7 @@ def get_league_details(league_name):
         logger.error(f"Get league details error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -244,7 +260,7 @@ def download_league():
         logger.error(f"Download league error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -280,7 +296,7 @@ def delete_league(league_name):
         logger.error(f"Delete league error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -311,7 +327,7 @@ def get_models():
         logger.error(f"Get models error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -347,7 +363,7 @@ def get_model_details(model_name):
         logger.error(f"Get model details error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -408,7 +424,7 @@ def train_model():
         logger.error(f"Train model error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -444,7 +460,7 @@ def delete_model(model_name):
         logger.error(f"Delete model error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -505,7 +521,7 @@ def predict_single_match():
         logger.error(f"Single prediction error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -572,7 +588,7 @@ def predict_fixtures():
         logger.error(f"Fixtures prediction error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -618,7 +634,7 @@ def analyze_league(league_name):
         logger.error(f"League analysis error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -660,7 +676,7 @@ def analyze_model(model_name):
         logger.error(f"Model analysis error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -698,7 +714,7 @@ def get_countries():
         logger.error(f"Get countries error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
 
 
@@ -736,5 +752,5 @@ def get_model_types():
         logger.error(f"Get model types error: {str(e)}")
         return jsonify({
             'status': 'error',
-            'message': str(e)
+            'message': _get_safe_error_message(e)
         }), 500
