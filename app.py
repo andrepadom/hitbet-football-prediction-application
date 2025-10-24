@@ -24,12 +24,19 @@ from utils.validators import validate_fixture_input
 # Database setup
 from database_config import db
 from flask_migrate import Migrate
+from flask_cors import CORS
+
+# Mobile API Blueprint
+from api.mobile_api import mobile_api, init_mobile_api
 
 # App initialization
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'prophitbet-secret-key-2025')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Enable CORS for mobile app
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 db.init_app(app)
 migrate = Migrate(app, db)
@@ -55,6 +62,12 @@ with app.app_context():
     data_service = DataService(league_repo)
     prediction_service = PredictionService(model_repo, data_service)
     scraping_service = ScrapingService()
+    
+    # Initialize mobile API with service instances
+    init_mobile_api(league_repo, model_repo, data_service, prediction_service, scraping_service)
+
+# Register Mobile API Blueprint
+app.register_blueprint(mobile_api)
 
 
 @app.route('/')
