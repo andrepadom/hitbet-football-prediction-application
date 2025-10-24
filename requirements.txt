@@ -1,5 +1,6 @@
 python==3.11
 flask==3.0.3 
+flask-cors==5.0.0
 psycopg2-binary==2.9.9 
 gunicorn==21.2.0
 trafilatura==2.0.0
