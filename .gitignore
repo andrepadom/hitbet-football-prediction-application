@@ -1,0 +1,71 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Flask
+instance/
+.webassets-cache
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Cache
+cache/
+*.cache
+
+# Uploads
+uploads/
+
+# Models and checkpoints (optional - uncomment if you want to ignore)
+# database/storage/checkpoints/
+# database/storage/leagues/saved/
+
+# Xcode
+ios-app/HitBetApp/DerivedData/
+ios-app/HitBetApp/build/
+ios-app/HitBetApp/*.xcodeproj/xcuserdata/
+ios-app/HitBetApp/*.xcworkspace/xcuserdata/
+ios-app/HitBetApp/.DS_Store
+
+# Environment variables
+.env
+.env.local
